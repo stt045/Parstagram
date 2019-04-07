@@ -36,13 +36,11 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         post.saveInBackground { (success, error) in
             if success {
                 print("saved!")
+                self.dismiss(animated: true, completion: nil)
             } else {
                 print("Error: /(error)")
             }
         }
-        
-        
-        
     }
     
     // runs when camera icon is pressed

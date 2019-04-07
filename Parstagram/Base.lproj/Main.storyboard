@@ -96,7 +96,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="432" id="H2W-4z-x1o">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="432" id="H2W-4z-x1o" customClass="PostCell" customModule="Parstagram">
                                         <rect key="frame" x="0.0" y="28" width="375" height="432"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="H2W-4z-x1o" id="2KJ-Fl-3qC">
@@ -134,6 +134,11 @@
                                                 <constraint firstItem="6Mz-AS-AG4" firstAttribute="top" secondItem="Ngk-2Q-rPE" secondAttribute="bottom" constant="8" id="mHe-tI-Zum"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="captionLabel" destination="6Mz-AS-AG4" id="hqK-Ei-oHw"/>
+                                            <outlet property="photoView" destination="ahx-eq-XJt" id="e0O-qa-ouc"/>
+                                            <outlet property="usernameLabel" destination="Ngk-2Q-rPE" id="84W-3z-o91"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -148,6 +153,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="L5m-M6-PJW" id="Bvv-Jv-jgG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QHc-CC-GFD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
