@@ -74,8 +74,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="passwordField" destination="8bC-Xf-vdC" id="QGR-i1-JoY"/>
+                        <outlet property="passwordField" destination="VwB-f6-94d" id="DJ3-X9-pdj"/>
                         <outlet property="usernameField" destination="aNU-ki-etZ" id="Xy3-xj-fLS"/>
+                        <segue destination="XtW-Ue-gMP" kind="presentation" identifier="loginSegue" id="oPa-0P-GCn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
