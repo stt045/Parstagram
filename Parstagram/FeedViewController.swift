@@ -18,6 +18,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     let commentBar = MessageInputBar()
     var showsCommentBar = false
     var posts = [PFObject]()
+    var selectedPost: PFObject!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,11 +68,32 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func messageInputBar(_ inputBar: MessageInputBar, didPressSendButtonWith text: String) {
         // Create the comment
+        // Defining the properties the comment object has
+        let comment = PFObject(className: "Comments")
+        comment["text"] = text
+        comment["post"] = selectedPost
+        comment["author"] = PFUser.current()
+
+        selectedPost.add(comment, forKey: "comments")
+
+        /*
+         * When you save the post in Parse, it will automatically save the comment as well. Firebase doesn't do this automatically.
+         */
+        selectedPost.saveInBackground { (success, error) in
+            if success {
+                print("Comment saved")
+            } else {
+                print("Error in saving comment")
+            }
+        }
+        
+        tableView.reloadData()
         
         //Clear and dismiss the input bar
         commentBar.inputTextView.text = nil
         showsCommentBar = false
         becomeFirstResponder()
+        commentBar.inputTextView.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,7 +145,7 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // Every time the user clicks on the cell, this function runs
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let post = posts[indexPath.row]
+        let post = posts[indexPath.section]
         
         // Defining a new PF Object
         let comments = (post["comments"] as? [PFObject]) ?? []
@@ -133,25 +155,8 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
             showsCommentBar = true
             becomeFirstResponder()
             commentBar.inputTextView.becomeFirstResponder()
+            selectedPost = post
         }
-        
-//        // Defining the properties the comment object has
-//        comment["text"] = "This is a random comment"
-//        comment["post"] = post
-//        comment["author"] = PFUser.current()
-//
-//        post.add(comment, forKey: "comments")
-//
-//        /*
-//         * When you save the post in Parse, it will automatically save the comment as well. Firebase doesn't do this automatically.
-//         */
-//        post.saveInBackground { (success, error) in
-//            if success {
-//                print("Comment saved")
-//            } else {
-//                print("Error in saving comment")
-//            }
-//        }
     }
 
     @IBAction func onLogoutButton(_ sender: Any) {
