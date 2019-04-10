@@ -28,6 +28,14 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Do any additional setup after loading the view.
     }
     
+    override var inputAccessoryView: UIView? {
+        return commentBar
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
     // Used to refresh table view after you compose a new post
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
