@@ -25,7 +25,16 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.delegate = self
         tableView.dataSource = self
         tableView.keyboardDismissMode = .interactive
-        // Do any additional setup after loading the view.
+        
+        let center = NotificationCenter.default
+        center.addObserver(self, selector: #selector(keyboardWillBeHidden(note:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    // Function called when keyboard is hiding
+    @objc func keyboardWillBeHidden(note: Notification) {
+        commentBar.inputTextView.text = nil
+        showsCommentBar = false
+        becomeFirstResponder()
     }
     
     override var inputAccessoryView: UIView? {
@@ -104,25 +113,32 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         let post = posts[indexPath.row]
         
         // Defining a new PF Object
-        let comment = PFObject(className: "Comments")
+        let comments = (post["comments"] as? [PFObject]) ?? []
         
-        // Defining the properties the comment object has
-        comment["text"] = "This is a random comment"
-        comment["post"] = post
-        comment["author"] = PFUser.current()
-        
-        post.add(comment, forKey: "comments")
-        
-        /*
-         * When you save the post in Parse, it will automatically save the comment as well. Firebase doesn't do this automatically.
-         */
-        post.saveInBackground { (success, error) in
-            if success {
-                print("Comment saved")
-            } else {
-                print("Error in saving comment")
-            }
+        // Moving keyboard and text input up when pressing on comment
+        if indexPath.row == comments.count + 1 {
+            showsCommentBar = true
+            becomeFirstResponder()
+            commentBar.inputTextView.becomeFirstResponder()
         }
+        
+//        // Defining the properties the comment object has
+//        comment["text"] = "This is a random comment"
+//        comment["post"] = post
+//        comment["author"] = PFUser.current()
+//
+//        post.add(comment, forKey: "comments")
+//
+//        /*
+//         * When you save the post in Parse, it will automatically save the comment as well. Firebase doesn't do this automatically.
+//         */
+//        post.saveInBackground { (success, error) in
+//            if success {
+//                print("Comment saved")
+//            } else {
+//                print("Error in saving comment")
+//            }
+//        }
     }
 
     @IBAction func onLogoutButton(_ sender: Any) {
