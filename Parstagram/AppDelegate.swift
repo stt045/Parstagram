@@ -24,6 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 configuration.server = "https://shrouded-plains-55707.herokuapp.com/parse"
             })
         )
+        
+        // If user is already logged in
+        if PFUser.current() != nil {
+            // opening a view controller
+            let main = UIStoryboard(name: "Main", bundle: nil)
+            
+            // instantiating a view controller
+            let feedNavigationController = main.instantiateViewController(withIdentifier: "FeedNavigationController")
+            
+            window?.rootViewController = feedNavigationController
+            
+        }
+        
         return true
     }
 

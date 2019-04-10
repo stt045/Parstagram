@@ -63,7 +63,23 @@ class FeedViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
         
     }
+    
+    // Every time the user clicks on the cell, this function runs
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        <#code#>
+    }
 
+    @IBAction func onLogoutButton(_ sender: Any) {
+        // Logging out within the cache
+        PFUser.logOut()
+        
+        let main = UIStoryboard(name: "Main", bundle: nil)
+        let loginViewController = main.instantiateViewController(withIdentifier: "LoginViewController")
+        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        
+        delegate.window?.rootViewController = loginViewController
+    }
     /*
     // MARK: - Navigation
 
